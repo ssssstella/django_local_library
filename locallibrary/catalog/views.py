@@ -84,7 +84,6 @@ class LoanedBooksLibrarianListView(PermissionRequiredMixin, generic.ListView):
             .order_by('due_back')
         )
 
-
 import datetime
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render, get_object_or_404
@@ -96,6 +95,7 @@ from catalog.forms import RenewBookForm
 @login_required
 @permission_required('catalog.can_mark_returned', raise_exception=True)
 def renew_book_librarian(request, pk):
+    """View function for renewing a specific BookInstance by librarian."""
     book_instance = get_object_or_404(BookInstance, pk=pk)
 
     # If this is a POST request then process the Form data
@@ -125,9 +125,9 @@ def renew_book_librarian(request, pk):
 
     return render(request, 'catalog/book_renew_librarian.html', context)
 
+
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-
 
 class AuthorCreate(PermissionRequiredMixin, CreateView):
     model = Author
